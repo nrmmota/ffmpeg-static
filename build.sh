@@ -320,13 +320,13 @@ make -j $jval
 make install
 
 echo "*** Building mp3lame ***"
-cd $BUILD_DIR/lame*
+#cd $BUILD_DIR/lame*
 # The lame build script does not recognize aarch64, so need to set it manually
-uname -a | grep -q 'aarch64' && lame_build_target="--build=arm-linux" || lame_build_target=''
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --enable-nasm --disable-shared $lame_build_target
-make
-make install
+#uname -a | grep -q 'aarch64' && lame_build_target="--build=arm-linux" || lame_build_target=''
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#[ ! -f config.status ] && ./configure --prefix=$TARGET_DIR --enable-nasm --disable-shared $lame_build_target
+#make
+#make install
 
 echo "*** Building opus ***"
 cd $BUILD_DIR/opus*
@@ -384,13 +384,13 @@ make -j $jval
 make install
 
 echo "*** Building zimg ***"
-cd $BUILD_DIR/zimg-release-*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-./autogen.sh
-./configure --enable-static  --prefix=$TARGET_DIR --disable-shared
-sed -i 's/size_t/std::size_t/g' src/zimg/colorspace/matrix3.cpp
-make -j $jval
-make install
+#cd $BUILD_DIR/zimg-release-*
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#./autogen.sh
+#./configure --enable-static  --prefix=$TARGET_DIR --disable-shared
+#sed -i 's/size_t/std::size_t/g' src/zimg/colorspace/matrix3.cpp
+#make -j $jval
+#make install
 
 echo "*** Building libwebp ***"
 cd $BUILD_DIR/libwebp*
@@ -425,25 +425,25 @@ make -j $jval
 make install
 
 echo "*** Building libsdl ***"
-cd $BUILD_DIR/SDL*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-./autogen.sh
-./configure --prefix=$TARGET_DIR --disable-shared
-make -j $jval
-make install
+#cd $BUILD_DIR/SDL*
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#./autogen.sh
+#./configure --prefix=$TARGET_DIR --disable-shared
+#make -j $jval
+#make install
 
 echo "*** Building RIST ***"
-cd $BUILD_DIR
-rm -rf librist
-git clone https://code.videolan.org/rist/librist.git
-cd $BUILD_DIR/librist*
-git checkout v0.2.10
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-mkdir -p build
-cd build
-meson --default-library=static .. --prefix=$TARGET_DIR --bindir="../bin/" --libdir="$TARGET_DIR/lib"
-ninja
-ninja install
+#cd $BUILD_DIR
+#rm -rf librist
+#git clone https://code.videolan.org/rist/librist.git
+#cd $BUILD_DIR/librist*
+#git checkout v0.2.10
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#mkdir -p build
+#cd build
+#meson --default-library=static .. --prefix=$TARGET_DIR --bindir="../bin/" --libdir="$TARGET_DIR/lib"
+#ninja
+#ninja install
 
 echo "*** Building SRT ***"
 cd $BUILD_DIR/srt*
@@ -479,9 +479,7 @@ if [ "$platform" = "linux" ]; then
     --enable-version3 \
     --enable-libass \
     --enable-libfribidi \
-    --enable-libfdk-aac \
     --enable-libfreetype \
-    --enable-libmp3lame \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
@@ -495,13 +493,8 @@ if [ "$platform" = "linux" ]; then
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
-    --enable-libx264 \
-    --enable-libx265 \
-    --enable-libxvid \
-    --enable-libzimg \
     --enable-nonfree \
     --enable-openssl \
-    --enable-librist \
     --enable-libsrt
 elif [ "$platform" = "darwin" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
@@ -523,7 +516,7 @@ elif [ "$platform" = "darwin" ]; then
     --enable-libfribidi \
     --enable-libfdk-aac \
     --enable-libfreetype \
-    --enable-libmp3lame \
+#    --enable-libmp3lame \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
